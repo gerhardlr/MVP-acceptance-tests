@@ -7,6 +7,8 @@ test_calc
 
 Acceptance tests for MVP.
 """
+import sys
+sys.path.append('/app')
 
 import pytest
 from assertpy import assert_that
