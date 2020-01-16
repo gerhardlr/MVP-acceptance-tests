@@ -36,25 +36,30 @@ def test_allocation():
 
     print("Allocating new resources... ")
     result = the_subarray.allocate(the_resource_allocation)
-    pause()
+    pause() #rather poll for subarray_proxy.State changing OFF/OFLLINE to ON (TMC team to confirm whether this is really neccesary
 
     assert_that(result).is_equal_to(the_resource_allocation)
 
     # Confirm result via direct inspection of TMC
     subarray_proxy = DeviceProxy('ska_mid/tm_subarray_node/1')
-    pause()
+    pause() # not neccesary
     receptor_list = subarray_proxy.receptorIDList
-    pause()
-
+    pause() # not neccesary
+    #need to check the state as well is in ObsState = IDLE and State = ON
+    #TODO check the resource assignment of the CSP is correct (receptors and corresponding VCC state   - also check that it changed to correct state)
+    #mid_csp/elt/master check the status of receptors and VCC reflect assignment
+    #mid_csp/elt/subarray_01 check status and correct composition
+    # check the resource assignment of the SDP is correct (no op - also check that the changed to correct state ObsState= IDLE and State = ON)
+    # check that the dishes have responded
     assert_that(receptor_list).is_equal_to((1, 2))
 
     print("Now deallocating resources ... ")
     the_subarray.deallocate()
-    pause()
+    pause() #rather poll for subarray_proxy.State changing ON OFFLINE (TMC team to confim)
 
     # Confirm result via direct inspection of TMC - expecting None 
     receptor_list = subarray_proxy.receptorIDList
-    pause()
+    pause() # not needed
     
     assert_that(receptor_list).is_equal_to(None)
 

@@ -7,7 +7,7 @@ build: ## build the base dependencies needed for basic operations
 
 
 invoke:
-	source /venv/bin/activate 
+	sudo source /venv/bin/activate 
 	 
 interactive:
 	/venv/bin/itango3 --profile=ska
