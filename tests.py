@@ -13,7 +13,8 @@ sys.path.append('/app')
 import pytest
 from time import sleep
 from assertpy import assert_that
-from oet.domaim import SKAMid, SubArray, ResourceAllocation, Dish
+
+from oet.domain import SKAMid, SubArray, ResourceAllocation, Dish
 from tango import DeviceProxy
 
 def pause():
@@ -28,9 +29,10 @@ def test_allocation():
     print("Starting up telescope ...")
     the_telescope.start_up()
 
-    print("Releasing any previously allocated resources... ")
-    result = the_subarray.deallocate()
-    pause()
+   #commented this out as it gives an error when it was already deallocated 
+   # print("Releasing any previously allocated resources... ")
+   # result = the_subarray.deallocate()
+   # pause()
 
     print("Allocating new resources... ")
     result = the_subarray.allocate(the_resource_allocation)
@@ -44,10 +46,10 @@ def test_allocation():
     receptor_list = subarray_proxy.receptorIDList
     pause()
 
-    assert_that(receptor_list).is_equal_to("(1, 2)")
+    assert_that(receptor_list).is_equal_to((1, 2))
 
     print("Now deallocating resources ... ")
-    subarray.deallocate()
+    the_subarray.deallocate()
     pause()
 
     # Confirm result via direct inspection of TMC - expecting None 
@@ -59,5 +61,5 @@ def test_allocation():
     print("Subarry has no allocated resources")
 
     # put telescope to standby
-    telescope.standby()
+    the_telescope.standby()
     print("Script Complete: All resources dealoccated, Telescope is in standby")
