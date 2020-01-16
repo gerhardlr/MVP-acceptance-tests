@@ -3,18 +3,12 @@ help:
 
 
 build: ## build the base dependencies needed for basic operations
-	sudo apt-get update && \
-	sudo apt-get install pipenv -y && \
-	cd /app && \
-	pipenv update && \
-	cd /home/MVP-acceptance-tests && \
-	sudo chown $USER -R .
+	pip3 install -r requirements
+
 
 invoke:
-	pipenv shell && \
-	cd /home/MVP-acceptance-tests 
-
-	
+	source /venv/bin/activate 
+	 
 
 test: ## run tests
 	py.test
