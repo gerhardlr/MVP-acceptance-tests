@@ -9,6 +9,8 @@ build: ## build the base dependencies needed for basic operations
 invoke:
 	source /venv/bin/activate 
 	 
+interactive:
+	/venv/bin/itango3 --profile=ska
 
 test: ## run tests
 	py.test
